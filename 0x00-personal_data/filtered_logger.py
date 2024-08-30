@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """this script define function"""
-import logging
 import re
 
 

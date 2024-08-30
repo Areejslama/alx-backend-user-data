@@ -2,7 +2,7 @@
 """
 This script defines a function to obfuscate sensitive data"""
 import re
-from typing import List
+from typing import List, Tuple
 import logging
 
 
@@ -33,3 +33,18 @@ class RedactingFormatter(logging.Formatter):
         """define function"""
         log = super().format(record)
         return filter_datum(self.fields, self.REDACTION, log, self.SEPARATOR)
+
+
+PII_FIELDS: Tuple[str] = ('name', 'email', 'ssn', 'password', 'ip')
+
+
+def get_logger() -> logging.Logger:
+    """define function"""
+    logger = logging.getLogger('user_data')
+    logger.setLevel(logging.INFO)
+    logger.Propagate = False
+    handler = logging.StreamHandler()
+    formatter = RedactingFormatter(fields=PII_FIELDS)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger

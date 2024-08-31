@@ -4,6 +4,8 @@ This script defines a function to obfuscate sensitive data"""
 import re
 from typing import List, Tuple
 import logging
+import mysql.connector
+import os
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -48,3 +50,14 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.MySQLConnection:
+    """define function"""
+    mydb = mysql.connector.connect(
+            username=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+            password=os.getenv('PERSONAL_DATA_DB_PASSWORD', 'root'),
+            host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+            database=os.getenv('PERSONAL_DATA_DB_NAME')
+            )
+    return mydb

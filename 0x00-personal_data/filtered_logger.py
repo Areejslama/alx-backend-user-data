@@ -5,7 +5,7 @@ import re
 from typing import List, Tuple
 import logging
 import mysql.connector
-import os
+from os import getenv
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -54,10 +54,10 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.MySQLConnection:
     """Connect to the MySQL database"""
-    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
-    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
-    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    db = os.getenv('PERSONAL_DATA_DB_NAME', '')
+    username = getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    password = getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    host = getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db = getenv('PERSONAL_DATA_DB_NAME', '')
 
     mydb = mysql.connector.connect(
         user=username,

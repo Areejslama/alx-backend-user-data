@@ -27,6 +27,6 @@ def stats() -> str:
 
 
 @app_views.route('/unauthorized')
-def authorized() -> str:
+def authorized() -> None:
     """define method"""
-    return abort(401)
+    abort(401)

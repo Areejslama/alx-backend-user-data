@@ -11,12 +11,12 @@ class Auth:
         """return require auth"""
         if path is None:
             return True
-        
+
         if excluded_paths is None or not excluded_paths:
             return True
 
-        for excluded_paths in excluded_paths:
-            if fnmatch.fnmatch(path, excluded_paths):
+        for excluded_path in excluded_paths:
+            if fnmatch.fnmatch(path, excluded_path):
                 return False
 
         return True

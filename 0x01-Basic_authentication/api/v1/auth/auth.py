@@ -27,9 +27,8 @@ class Auth:
         """define header"""
         if request is None:
             return None
-        if 'Authorization' is not None:
-            return request.headers.get('Authorization')
-
+        return request.headers.get('Authorization')
+    
     def current_user(self, request=None) -> TypeVar('User'):
         """define user"""
         return None

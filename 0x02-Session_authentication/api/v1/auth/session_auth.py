@@ -9,6 +9,7 @@ class SessionAuth(Auth):
     def __init__(self):
         """Initialize the session storage."""
         self.user_id_by_session_id = {}
+    
     def create_session(self, user_id: str = None) -> str:
         """define method"""
         if user_id is None:

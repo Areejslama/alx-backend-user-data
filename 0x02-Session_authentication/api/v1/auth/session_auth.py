@@ -32,4 +32,3 @@ class SessionAuth(Auth):
         user_id = self.user_id_by_session_id.get(cookie)
         user = User.get(user_id)
         return user
-

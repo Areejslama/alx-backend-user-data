@@ -39,7 +39,7 @@ def handler():
         return
     auth_header = auth.authorization_header(request)
     auth_cookie = auth.session_cookie(request)
-    if auth_header and auth_cookie is None:
+    if auth_header is None and auth_cookie is None:
         abort(401)
 
     request.current_user = auth.current_user(request)

@@ -31,3 +31,14 @@ def get_user() -> str:
         response.set_cookie(session_name, session_id)
 
     return response
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def destroy() -> str:
+    """define method"""
+    destroy_session = auth.destroy_session(request)
+    if destroy_session is None:
+        return False
+    abort(404)
+    return jsonify({}), 200

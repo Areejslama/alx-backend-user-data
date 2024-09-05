@@ -37,8 +37,8 @@ def get_user() -> str:
                  strict_slashes=False)
 def destroy() -> str:
     """define method"""
-    destroy_session = auth.destroy_session(request)
-    if destroy_session is None:
+    destroyed_session = auth.destroy_session(request)
+    if destroyed_session is None:
+        abort(404)
         return False
-    abort(404)
     return jsonify({}), 200

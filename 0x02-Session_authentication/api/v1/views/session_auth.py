@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """this script to Create a new Flask view"""
 from flask import request, jsonify
-from api.v1.app import auth
 from api.v1.views import app_views
 from models.user import User
 from os import getenv
@@ -37,6 +36,7 @@ def get_user() -> str:
                  strict_slashes=False)
 def destroy() -> str:
     """define method"""
+    from api.v1.app import auth
     destroyed_session = auth.destroy_session(request)
     if destroyed_session is None:
         abort(404)

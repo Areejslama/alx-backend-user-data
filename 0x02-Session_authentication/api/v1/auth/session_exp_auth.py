@@ -34,19 +34,15 @@ class SessionExpAuth(SessionAuth):
         """define function"""
         if session_id is None:
             return None
-
-        user_info = self.user_id_by_session_id.get(session_id)
-        if user_info is None:
+        user_details = self.user_id_by_session_id.get(session_id)
+        if user_details is None:
             return None
-
+        if "created_at" not in user_details.keys():
+            return None
         if self.session_duration <= 0:
-            return user_info.get("user_id")
-        created_at = user_info.get("created_at")
-        if created_at is None:
+            return user_details.get("user_id")
+        created_at = user_details.get("created_at")
+        expired = created_at + timedelta(seconds=self.session_duration)
+        if expired < datetime.now():
             return None
-
-        expire = created_at + timedelta(seconds=self.session_duration)
-        if expire < datetime.now():
-            return None
-
-        return user_info.get("user_id")
+        return user_details.get("user_id")

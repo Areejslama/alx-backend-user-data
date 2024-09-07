@@ -10,7 +10,7 @@ class SessionExpAuth(SessionAuth):
     def __init__(self):
         """init method"""
         try:
-            duration =  int(getenv("SESSION_DURATION"))
+            duration = int(getenv("SESSION_DURATION"))
         except Exception:
             duration = 0
 
@@ -34,18 +34,17 @@ class SessionExpAuth(SessionAuth):
         """define function"""
         if session_id is None:
             return None
-        
+
         user = self.user_id_by_session_id.get(session_id)
         if user is None:
             return None
-        
+
         if self.session_duration <= 0:
             return user.get("user_id")
-        
         created_at = user.get("created_at")
         if created_at is None:
             return None
-        
+
         expire = created_at + timedelta(seconds=self.session_duration)
         if expire < datetime.now():
             return None

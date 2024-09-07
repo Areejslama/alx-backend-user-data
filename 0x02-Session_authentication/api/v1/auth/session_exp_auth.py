@@ -35,13 +35,13 @@ class SessionExpAuth(SessionAuth):
         if session_id is None:
             return None
 
-        user = self.user_id_by_session_id.get(session_id)
-        if user is None:
+        user_info = self.user_id_by_session_id.get(session_id)
+        if user_info is None:
             return None
 
         if self.session_duration <= 0:
-            return user.get("user_id")
-        created_at = user.get("created_at")
+            return user_info.get("user_id")
+        created_at = user_info.get("created_at")
         if created_at is None:
             return None
 
@@ -49,4 +49,4 @@ class SessionExpAuth(SessionAuth):
         if expire < datetime.now():
             return None
 
-        return user.get("user_id")
+        return user_info.get("user_id")

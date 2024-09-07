@@ -10,7 +10,6 @@ from os import getenv
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def get_user() -> str:
     """Handle user login."""
-    from api.v1.app import auth
     email = request.form.get('email')
     password = request.form.get('password')
 
@@ -25,6 +24,7 @@ def get_user() -> str:
     for user in users:
         if not user.is_valid_password(password):
             return jsonify({"error": "wrong password"}), 401
+        from api.v1.app import auth
         session_id = auth.create_session(user.id)
         response = jsonify(user.to_json())
         session_name = getenv('SESSION_NAME')

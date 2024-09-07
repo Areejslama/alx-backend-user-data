@@ -6,9 +6,11 @@ from models.user import User
 from os import getenv
 
 
+
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def get_user() -> str:
     """Handle user login."""
+    from api.v1.app import auth
     email = request.form.get('email')
     password = request.form.get('password')
 

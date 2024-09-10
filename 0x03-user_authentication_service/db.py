@@ -32,7 +32,7 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """define method"""
+        """Add new user to database"""
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()

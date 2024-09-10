@@ -40,17 +40,17 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        """define method"""
-        row = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
+        """Find a user in the database by keyword arguments"""
+        valid_keys = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
 
         for key in kwargs.keys():
-            if key not in row:
+            if key not in valid_keys:
                 raise InvalidRequestError()
-            else:
-                query = self._session.query(User).filter_by(**kwargs).first()
-            if query is None:
-                raise NoResultFound()
-        return query
+            result = self._session.query(User).filter_by(**kwargs).first()
+
+        if result is None:
+            raise NoResultFound()
+        return result
 
     def update_user(self, user_id, **kwargs) -> None:
         """define method"""

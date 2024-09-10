@@ -2,12 +2,10 @@
 """DB module
 """
 from sqlalchemy import create_engine
-from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
-from typing import TypeVar
+
 from user import Base, User
 
 
@@ -33,34 +31,8 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Add new user to database"""
-        user = User(email=email, hashed_password=hashed_password)
+        """define method"""
+        user = User(email=email,  hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
         return user
-
-    def find_user_by(self, **kwargs) -> User:
-        """Find a user in the database by keyword arguments"""
-        valid_keys = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
-
-        for key in kwargs.keys():
-            if key not in valid_keys:
-                raise InvalidRequestError()
-            result = self._session.query(User).filter_by(**kwargs).first()
-
-        if result is None:
-            raise NoResultFound()
-        return result
-
-    def update_user(self, user_id, **kwargs) -> None:
-        """define method"""
-        user = self.find_user_by(id=user_id)
-        item = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
-        if user is None:
-            return None
-        for key, value in kwargs.items():
-            if key in item:
-                setattr(user, key, value)
-            else:
-                raise ValueError
-        self._session.commit()

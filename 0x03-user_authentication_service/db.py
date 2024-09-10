@@ -2,9 +2,10 @@
 """DB module
 """
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.session import Session
-
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from user import Base, User
 
 
@@ -28,6 +29,7 @@ class DB:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
+
     def add_user(self, email: str, hashed_password: str) -> User:
         """add user to database"""
         user = User(email=email, hashed_password=hashed_password)
@@ -38,7 +40,7 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """return user found"""
         user_keys = ['id', 'email', 'hashed_password', 'session_id',
-                'reset_token']
+                     'reset_token']
         for key in kwargs.keys():
             if key not in user_keys:
                 raise InvalidRequestError
@@ -51,7 +53,7 @@ class DB:
         """update user"""
         user_to_update = self.find_user_by(id=user_id)
         user_keys = ['id', 'email', 'hashed_password', 'session_id',
-                'reset_token']
+                     'reset_token']
         for key, value in kwargs.items():
             if key in user_keys:
                 setattr(user_to_update, key, value)

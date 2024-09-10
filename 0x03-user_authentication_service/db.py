@@ -39,5 +39,4 @@ class DB:
             return user
         except Exception as e:
             self._session.rollback()
-            print(f"Error occurred: {e}")
             return None

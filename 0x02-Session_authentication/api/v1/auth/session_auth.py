@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """this script define class"""
 import uuid
-from models.user import User
+from typing import TypeVar
 from .auth import Auth
+from models.user import User
 
 
 class SessionAuth(Auth):

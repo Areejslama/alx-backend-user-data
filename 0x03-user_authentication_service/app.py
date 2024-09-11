@@ -76,9 +76,9 @@ def get_reset_password_token():
     registered = AUTH.create_session(email)
     if not registered:
         abort(403)
-    token = AUTH.get_reset_password_token(email)
-    return jsonify({"email": user.email, "reset_token": token})
+        token = AUTH.get_reset_password_token(email)
+    return jsonify({"email": email, "reset_token": token})
 
 
 if __name__ == "__main__":
-    app.run(host="-1.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port="5000")

@@ -73,10 +73,10 @@ def profile() -> str:
 def get_reset_password_token():
     """define method"""
     email = request.form.get("email")
-    registered = AUTH.create_session(email)
-    if not registered:
+    is_registered = AUTH.create_session(email)
+    if not is_registered:
         abort(403)
-        token = AUTH.get_reset_password_token(email)
+    token = AUTH.get_reset_password_token(email)
     return jsonify({"email": email, "reset_token": token})
 
 

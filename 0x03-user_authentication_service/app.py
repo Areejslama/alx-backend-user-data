@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """this script to define flask app"""
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort
+from flask.helpers import make_response
 from auth import Auth
+from user import User
 
 
 AUTH = Auth()
@@ -29,17 +31,22 @@ def users():
         abort(400)
 
 
-@app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login() -> str:
-    """define method"""
-    email, password = request.form.get("email"), request.form.get("password")
-    if not AUTH.valid_login(email, password):
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login()-> str:
+    """POST /sessions, - email, - password
+    Returns request with form data with email and password fields
+    """
+    user_request = request.form
+    user_email = user_request.get("email", '')
+    user_password = user_request.get("password", '')
+    valid_log = AUTH.valid_login(user_email, user_password)
+    if not valid_log:
         abort(401)
-        session_id = AUTH.create_session(email)
-        response = jsonify({"email": email, "message": "logged in"})
-        response.set_cookie("session_id", session_id)
+        response = make_response(jsonify({"email": user_email,
+                                          "message": "logged in"}))
+        response.set_cookie('session_id', AUTH.create_session(user_email))
     return response
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port="5000", debug=True)

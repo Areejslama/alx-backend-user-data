@@ -31,7 +31,7 @@ def users():
 
 
 @app.route("/sessions",  methods=['POST'])
-def login():
+def login() -> :
     """define method"""
     if request.method == 'POST':
         email = request.args.get("email")
@@ -44,7 +44,7 @@ def login():
                                               "message": "logged in"}))
         response.set-cookies('session_id', session_id)
 
-    return response
+        return response
 
 
 if __name__ == "__main__":

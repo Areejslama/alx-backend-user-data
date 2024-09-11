@@ -32,13 +32,14 @@ def users():
 @app.route("/sessions",  methods=['POST'])
 def login() -> str:
     """define method"""
-     email = request.form.get("email") 
-     password = request.form.get("password")
-     if not AUTH.valid_login(email, password):
-         abort(401)
-         session_id = AUTH.create_session(email)
-         response = jsonify({"email": email, "message": "logged in"})
-         response.set_cookie("session_id", session_id)
+    email = request.form.get('email', '')
+    password = request.form.get('password', '')
+    valid_log = AUTH.valid_login(email,password)
+    if not valid_log:
+        abort(401)
+        response = make_response(jsonify({"email": user_email,
+                                      "message": "logged in"}))
+        response.set_cookie('session_id', AUTH.create_session(email))
     return response
 
 

@@ -40,20 +40,21 @@ def login() -> str:
     password = request.form.get("password")
 
     if not email or not password:
-        abort(400)
+        abort(400, description="Missing email or password")
 
     try:
-        if not AUTH.valid_login("email", "password"):
-            abort(401)
+        if not AUTH.valid_login(email, password):
+            abort(401, description="Invalid email or password")
+
             session_id = AUTH.create_session(email)
-            response = make_response(jsonify({"email": email,
+            response = make_response(jsonify({"email": email, 
                                               "message": "logged in"}))
             response.set_cookie("session_id", session_id)
 
         return response
 
     except Exception as e:
-        abort(500)
+        abort(500, description="Internal server error")
 
 
 if __name__ == "__main__":

@@ -76,6 +76,5 @@ class Auth:
             user = self._db.update_user(user_id=user_id)
         if user is None:
             return None
-          except NoResultFound:
+        except NoResultFound:
             return None
-        return user

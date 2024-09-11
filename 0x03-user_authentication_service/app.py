@@ -36,16 +36,20 @@ def login() -> str:
     """POST /sessions, - email, - password
     Returns request with form data with email and password fields
     """
-    user_request = request.form
-    user_email = user_request.get("email", '')
-    user_password = user_request.get("password", '')
-    valid_log = AUTH.valid_login("user_email", "user_password")
-    if not valid_log:
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    try:
+        if not AUTH.valid_login("email", "password"):
+            abort(401)
+            session_id = AUTH.create_session(email)
+            response = make_response(jsonify({"email": email,
+                                              "message": "logged in"}))
+            response.set_cookie("session_id", session_id)
+        return response
+
+    except Exception as e:
         abort(401)
-        response = make_response(jsonify({"email": user_email,
-                                          "message": "logged in"}))
-        response.set_cookie('session_id', AUTH.create_session(user_email))
-    return response
 
 
 if __name__ == "__main__":

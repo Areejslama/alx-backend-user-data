@@ -51,15 +51,12 @@ def login():
 def logout():
     """define method to logout"""
     session_id = request.cookies.get("session_id")
-    if session_id is None:
+    user = Auth.get_user_from_session_id(session_id)
+    if session_id is None or user is None:
         abort(403)
-        user = Auth.get_user_from_session_id(session_id)
-        if user:
-            Auth.destroy_session(user.id)
-            response = redirect(url_for('home'))
-            response.set_cookie('session_id')
-    
-    return response
+        Auth.destroy_session(user.id)
+        return redirect('/')
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")

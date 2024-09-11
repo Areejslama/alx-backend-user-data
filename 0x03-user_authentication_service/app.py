@@ -31,7 +31,7 @@ def users():
 
 
 @app.route("/sessions",  methods=['POST'])
-def login():
+def login() -> str:
     """define method"""
     email = request.args.get("email")
     password = request.args.get("password")

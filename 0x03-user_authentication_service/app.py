@@ -31,20 +31,19 @@ def users():
 
 
 @app.route("/sessions",  methods=['POST'])
-def login() -> :
+def login() :
     """define method"""
-    if request.method == 'POST':
-        email = request.args.get("email")
-        password = request.args.get("password")
-        user = AUTH.valid_login("email", "password")
-        if not user:
-            abort(401)
-            session_id = Auth.create_session(email)
-            response = make_response(jsonify({"email": "<user email>",
-                                              "message": "logged in"}))
-        response.set-cookies('session_id', session_id)
+    email = request.args.get("email")
+    password = request.args.get("password")
+    user = AUTH.valid_login("email", "password")
+    if not user:
+        abort(401)
+        session_id = Auth.create_session(email)
+        payload = {"email": "<user email>", "message": "logged in"}
+        response = make_response(jsonify(payload))
+        response.set_cookie("session_id", session_id)
 
-        return response
+    return response
 
 
 if __name__ == "__main__":

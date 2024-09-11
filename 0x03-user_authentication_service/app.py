@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """this script to define flask app"""
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -32,8 +32,8 @@ def users():
 @app.route("/sessions",  methods=['POST'])
 def login() -> str:
     """define method"""
-    email = request.args.get("email")
-    password = request.args.get("password")
+    email = request.form.get("email")
+    password = request.form.get("password")
     user = AUTH.valid_login("email", "password")
     if not user:
         abort(401)

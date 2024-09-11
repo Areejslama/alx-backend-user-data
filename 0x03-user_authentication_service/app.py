@@ -36,16 +36,26 @@ def login() -> str:
     """define method"""
     email = request.form.get("email")
     password = request.form.get("password")
+    if not email or not password:
+        abort(400)
+
     try:
-        if not AUTH.valid_login("email", "password"):
+        if not AUTH.valid_login(email, password):
             abort(401)
-            session_id = AUTH.create_session(email)
-            response = make_response(jsonify{"email": email,
-                                             "message": "logged in"})
-            response.set_cookie("session_id", session_id)
+
+        session_id = AUTH.create_session(email)
+        message = ({"email": email, "message": "logged in"})
+
+        response = make_response(jsonify(message))
+        response.set_cookie("session_id", session_id)
+
         return response
+
     except ValueError:
-        abort(401)
+        abort(400)
+
+    except Exception as e:
+        abort(500)
 
 
 if __name__ == "__main__":

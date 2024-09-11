@@ -40,7 +40,7 @@ def login() -> str:
         abort(400)
 
     try:
-        if not AUTH.valid_login("email", "password"):
+        if not AUTH.valid_login(email, password):
             abort(401)
 
         session_id = AUTH.create_session(email)

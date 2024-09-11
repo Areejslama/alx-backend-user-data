@@ -32,14 +32,14 @@ def users():
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login()-> str:
+def login() -> str:
     """POST /sessions, - email, - password
     Returns request with form data with email and password fields
     """
     user_request = request.form
     user_email = user_request.get("email", '')
     user_password = user_request.get("password", '')
-    valid_log = AUTH.valid_login(user_email, user_password)
+    valid_log = AUTH.valid_login("user_email", "user_password")
     if not valid_log:
         abort(401)
         response = make_response(jsonify({"email": user_email,

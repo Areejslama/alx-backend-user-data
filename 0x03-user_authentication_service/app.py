@@ -34,25 +34,17 @@ def users():
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login():
     """define method"""
-    email = request.form.get("email", '')
-    password = request.form.get("password", '')
-    if not email or not password:
-        abort(400)
-
-    try:
-        if not AUTH.valid_login(email, password):
-            abort(401)
-
+    email = request.form.get("email")
+    password = request.form.get("password")
+    if not AUTH.valid_login(email, password):
+        abort(401)
+        
         session_id = AUTH.create_session(email)
         message = ({"email": email, "message": "logged in"})
-
         response = make_response(jsonify(message))
         response.set_cookie("session_id", session_id)
-
-        return response
-
-    except ValueError:
-        abort(400)
+    
+    return response
 
 
 if __name__ == "__main__":

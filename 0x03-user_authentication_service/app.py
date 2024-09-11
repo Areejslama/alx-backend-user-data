@@ -34,7 +34,7 @@ def login() -> str:
     """define method"""
     email = request.form.get("email")
     password = request.form.get("password")
-    user = AUTH.valid_login("email", "password")
+    user = AUTH.valid_login(email, password)
     if not user:
         abort(401)
         session_id = Auth.create_session(email)

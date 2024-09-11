@@ -60,7 +60,7 @@ def logout():
 
 
 @app.route('/profile', methods=['GET'])
-def profile():
+def profile() -> str:
     """define method"""
     new_cookie = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(new_cookie)

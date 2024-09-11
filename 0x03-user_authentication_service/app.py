@@ -65,8 +65,7 @@ def profile():
     new_cookie = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(new_cookie)
     if user:
-        abort(200)
-        return jsonify({"email": "<user email>"})
+        return jsonify({"email": "<user email>"}), 200
     else:
         abort(403)
 

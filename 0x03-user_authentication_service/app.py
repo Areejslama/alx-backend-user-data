@@ -34,10 +34,10 @@ def login() -> str:
     """define method"""
     email = request.form.get('email', '')
     password = request.form.get('password', '')
-    valid_log = AUTH.valid_login(email,password)
+    valid_log = AUTH.valid_login("email","password")
     if not valid_log:
         abort(401)
-        response = make_response(jsonify({"email": user_email,
+        response = make_response(jsonify({"email": email,
                                       "message": "logged in"}))
         response.set_cookie('session_id', AUTH.create_session(email))
     return response

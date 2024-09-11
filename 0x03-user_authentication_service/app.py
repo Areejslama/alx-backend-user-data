@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """this script to define flask app"""
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from flask.helpers import make_response
 from auth import Auth
 from user import User
@@ -58,8 +58,8 @@ def logout():
             Auth.destroy_session(user.id)
             response = redirect(url_for('home'))
             response.set_cookie('session_id')
-        return response
-
+    
+    return response
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")

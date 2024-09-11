@@ -73,8 +73,8 @@ class Auth:
     def destroy_session(self, user_id: int) -> None:
         """define method"""
         try:
-            user = self._db.update_user(user_id=user_id)
-        if user is None:
-            return None
+            user = self._db.update_user(user_id=user_id, session_id=None)
+            if user is None:
+                return None
         except NoResultFound:
             return None

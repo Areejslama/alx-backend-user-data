@@ -47,14 +47,18 @@ def login():
     response.set_cookie('session_id', AUTH.create_session(user_email))
     return response
 
+
 @app.route('/sessions', methods=['DELETE'])
 def logout():
     """define method to logout"""
     session_id = request.cookies.get("session_id")
     user = Auth.get_user_from_session_id(session_id)
+
     if session_id is None or user is None:
         abort(403)
+
     Auth.destroy_session(user.id)
+
     return redirect('/')
 
 

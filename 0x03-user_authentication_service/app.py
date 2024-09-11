@@ -35,10 +35,12 @@ def login():
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get("password")
-        user = AUTH.valid_login("email", "password")
-        if not user:
-            abort(401)
-            session_id = AUTH.create_session("email")
+        if not email or not password:
+            abort(400)
+            user = AUTH.valid_login("email", "password")
+            if not user:
+                abort(401)
+            session_id = AUTH.create_session(email)
             response = make_response(jsonify({"email": email,
                                               "message": "logged in"}))
             response.set_cookie("session_id", session_id)

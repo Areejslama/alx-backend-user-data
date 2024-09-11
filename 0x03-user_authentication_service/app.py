@@ -34,8 +34,8 @@ def users():
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login():
     """define method"""
-    email = request.form.get("email")
-    password = request.form.get("password")
+    email = request.form.get('email', '')
+    password = request.form.get('password', '')
     if not email or not password:
         abort(400)
 
@@ -54,9 +54,6 @@ def login():
     except ValueError:
         abort(400)
 
-    except Exception as e:
-        abort(500)
-
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000", debug=True)
+    app.run(host="0.0.0.0", port="5000")

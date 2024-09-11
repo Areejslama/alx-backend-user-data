@@ -13,9 +13,11 @@ def _hash_password(password: str) -> bytes:
     hashed_password = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
     return hashed_password
 
+
 def _generate_uuid() -> str:
     """define method"""
     new_uuid = str(uuid.uuid4())
+    return new_uuid
 
 
 class Auth:

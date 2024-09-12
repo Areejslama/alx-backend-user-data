@@ -84,7 +84,7 @@ def get_reset_password_token():
 def update_password() -> str:
     """put method
     """
-    email = request.form.get('email')
+    user_email = request.form.get('email')
     reset_token = request.form.get('reset_token')
     new_password = request.form.get('new_password')
     try:

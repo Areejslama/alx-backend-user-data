@@ -2,6 +2,7 @@
 """this script to define flask app"""
 from flask import Flask, jsonify, request, abort, redirect
 from flask.helpers import make_response
+from sqlalchemy.orm.exc import NoResultFound
 from auth import Auth
 from user import User
 
@@ -89,7 +90,7 @@ def update_password() -> str:
 
     try:
         AUTH.update_password(reset_token, new_password)
-    except Exception:
+    except NoResultFound:
         abort(403)
     return jsonify({"email": user_email, "message": "Password updated"}), 200
 

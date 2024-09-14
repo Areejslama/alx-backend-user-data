@@ -84,7 +84,7 @@ def get_reset_password_token():
 def update_password() -> str:
     """PUT /reset_password, - email, - reset_token, - new_password
     Return a 403 HTTP code if token is invalid
-    if valid, respond with 200 HTTP code
+    if valid, respond with 200
     """
     user_email = request.form.get('email')
     reset_token = request.form.get('reset_token')

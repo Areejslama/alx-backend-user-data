@@ -81,13 +81,10 @@ def get_reset_password_token():
 
 
 @app.route('/reset_password', methods=['PUT'],  strict_slashes=False)
-def update_password():
-    """
-    Update the user's password using the provided reset token.
-    Request Payload:
-    - email (str): The email address of the user.
-    - reset_token (str): The reset token received by the user.
-    - new_password (str): The new password to set for the user.
+def update_password() -> str:
+    """PUT /reset_password, - email, - reset_token, - new_password
+    Return a 403 HTTP code if token is invalid
+    if valid, respond with 200 HTTP code
     """
     email = request.form.get("email")
     reset_token = request.form.get("reset_token")

@@ -90,7 +90,7 @@ class Auth:
             raise ValueError
 
     def update_password(self, reset_token: str, password: str) -> None:
-        """this method to update user password by given reset token"""
+        """this method to update user by reset token"""
         hashed = _hash_password(password)
         try:
             user = self._db.find_user_by(reset_token=reset_token)

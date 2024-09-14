@@ -91,9 +91,21 @@ def update_password() -> str:
     new_password = request.form.get('new_password')
     try:
         AUTH.update_password(reset_token, new_password)
-    except Exception:
+        @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+def update_password() -> str:
+    """PUT /reset_password, - email, - reset_token, - new_password
+    Return a 403 HTTP code if token is invalid
+    if valid, respond with 200 HTTP code
+    """
+    email = request.form.get('email')
+    reset_token = request.form.get('reset_token')
+    new_password = request.form.get('new_password')
+    try:
+        AUTH.update_password(reset_token, new_password)
+        return jsonify({"email": email, "message": "Password updated"}), 200
+
+    except ValueError:
         abort(403)
-    return jsonify({"email": user_email, "message": "Password updated"}), 200
 
 
 if __name__ == "__main__":
